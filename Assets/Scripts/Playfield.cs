@@ -6,23 +6,28 @@ public class Playfield : MonoBehaviour
 {
 	[SerializeField]
 	private int columns = 10;
+	public int Columns
+	{
+		get { return columns; }
+	}
 
 	[SerializeField]
 	private int rows = 20;
+	public int Rows
+	{
+		get { return rows; }
+	}
 
 	public List<List<int>> Grid { get; } = new List<List<int>>();
 
-	private List<List<int>> shape = new List<List<int>> {
-		new List<int>{ 1, 1 },
-		new List<int>{ 1, 1 }
-	};
-	private Vector2Int shapeTopLeftPos = new Vector2Int(0, 0);
+	private Piece piece = new Piece();
 	
 
 	private void Awake()
 	{
 		InitGrid();
 		SpawnShape();
+		StartCoroutine("Fall");
 	}
 
 	private void InitGrid()
@@ -40,12 +45,12 @@ public class Playfield : MonoBehaviour
 
 	private void SpawnShape()
 	{
-		int gridPosX = shapeTopLeftPos.x;
+		int gridPosX = piece.topLeftPos.x;
 		int gridPosY;
 
-		foreach (var row in shape)
+		foreach (var row in piece.Shape)
 		{
-			gridPosY = shapeTopLeftPos.y;
+			gridPosY = piece.topLeftPos.y;
 			foreach (var col in row)
 			{
 				Grid[gridPosX][gridPosY] = 1;
@@ -53,5 +58,11 @@ public class Playfield : MonoBehaviour
 			}
 			gridPosX++;
 		}
+	}
+
+	private IEnumerator Fall()
+	{
+		yield return new WaitForSeconds(1f);
+		piece.topLeftPos.y++;
 	}
 }
