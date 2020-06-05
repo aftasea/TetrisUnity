@@ -25,6 +25,6 @@ public class PlayfieldLayout : MonoBehaviour
 			{
 				Instantiate(gridCellPrefab, new Vector3(c, -r, 0), Quaternion.identity, parent);
 			}
-		}		
+		}
 	}
 }
