@@ -52,36 +52,23 @@ public class PlayfieldView : MonoBehaviour
 
 	private void DrawLanded()
 	{
-		//debugText.text = "";
-
-		//foreach (var row in playfield.Grid)
-		//{
-		//	foreach (var cell in row)
-		//	{
-		//		if (cell != 0)
-		//			debugText.text += FormatColor(cell + " ", Color.green);
-		//		else
-		//			debugText.text += cell + " ";
-		//	}
-		//	debugText.text += "\n";
-		//}
 	}
 
 	private void DrawCurrentPiece()
 	{
 		PieceDefinition piece = playfield.CurrentPiece;
-		int gridPosX = piece.topLeftPos.x;
-		int gridPosY;
+		int gridRow = piece.topLeftPos.x;
+		int gridColumn;
 
 		foreach (var pieceRow in piece.Shape)
 		{
-			gridPosY = piece.topLeftPos.y;
+			gridColumn = piece.topLeftPos.y;
 			foreach (var pieceColumn in pieceRow)
 			{
-				PlaceBlock(gridPosX, gridPosY);
-				gridPosY++;
+				PlaceBlock(gridRow, gridColumn);
+				gridColumn++;
 			}
-			gridPosX++;
+			gridRow++;
 		}
 	}
 
@@ -90,12 +77,12 @@ public class PlayfieldView : MonoBehaviour
 		GameObject block = availableBlocks.Dequeue();
 		visibleBlocks.Enqueue(block);
 		block.SetActive(true);
-		block.transform.position = new Vector2(row, -column);
+		block.transform.position = new Vector2(column, -row);
 	}
 
-	private string FormatColor(string str, Color col)
+	private string FormatColor(string str, Color color)
 	{
-		return "<color=#" + ColorUtility.ToHtmlStringRGBA(col) + ">"
+		return "<color=#" + ColorUtility.ToHtmlStringRGBA(color) + ">"
 			+ str
 			+ "</color>";
 	}

@@ -59,30 +59,55 @@ public class Playfield : MonoBehaviour
 	private IEnumerator Fall()
 	{
 		yield return new WaitForSeconds(initialFallTime);
+		
+		if (CanFall())
+		{
+			CurrentPiece.topLeftPos.x++;
+			StartCoroutine(Fall());
+		}
+		else
+		{
+			LandPiece();
+		}		
+	}
 
-		// check if landed -----------------------------
-		Vector2Int nextPos = new Vector2Int(
-			CurrentPiece.topLeftPos.x,
-			CurrentPiece.topLeftPos.y + 1
-		);
+	private bool CanFall()
+	{
+		int nextRow = CurrentPiece.topLeftPos.x + 1;
+		//Vector2Int nextPos = new Vector2Int(
+		//	CurrentPiece.topLeftPos.x + 1,
+		//	CurrentPiece.topLeftPos.y + 1
+		//);
 
+		for (int pieceRow = CurrentPiece.Shape.Count - 1; pieceRow >= 0; --pieceRow)
+		{
+			//for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
+			//{
+				if (nextRow + pieceRow >= Rows)
+				{
+					// landed! don't continue falling
+					return false;
+				}
+			//}
+		}
+
+		return true;
+	}
+
+	private void LandPiece()
+	{
 		for (int pieceRow = CurrentPiece.Shape.Count - 1; pieceRow >= 0; --pieceRow)
 		{
 			for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
 			{
-				//if (Grid[pieceRow + nextPos.x][pieceColumn + nextPos.y] )
-				if (nextPos.y + pieceRow >= Rows)
+				var shapeValue = CurrentPiece.Shape[pieceRow][pieceColumn];
+				if (shapeValue != 0)
 				{
-					// landed! don't continue falling
-					yield break;
+					int gridRow = CurrentPiece.topLeftPos.x + pieceRow;
+					int gridColumn = CurrentPiece.topLeftPos.y + pieceColumn;
+					Grid[gridRow][gridColumn] = shapeValue;
 				}
 			}
 		}
-
-		//------------------------------------------
-
-		
-		CurrentPiece.topLeftPos = nextPos;
-		StartCoroutine(Fall());
 	}
 }
