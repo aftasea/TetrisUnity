@@ -27,9 +27,19 @@ public class PlayfieldUI : MonoBehaviour
 		{
 			foreach (var cell in row)
 			{
-				debugText.text += cell + " ";
+				if (cell != 0)
+					debugText.text += FormatColor(cell + " ", Color.green);
+				else
+					debugText.text += cell + " ";
 			}
 			debugText.text += "\n";
 		}
+	}
+
+	private string FormatColor(string str, Color col)
+	{
+		return "<color=#" + ColorUtility.ToHtmlStringRGBA(col) + ">"
+			+ str
+			+ "</color>";
 	}
 }
