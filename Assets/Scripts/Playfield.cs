@@ -59,7 +59,30 @@ public class Playfield : MonoBehaviour
 	private IEnumerator Fall()
 	{
 		yield return new WaitForSeconds(initialFallTime);
-		CurrentPiece.topLeftPos.y++;
+
+		// check if landed -----------------------------
+		Vector2Int nextPos = new Vector2Int(
+			CurrentPiece.topLeftPos.x,
+			CurrentPiece.topLeftPos.y + 1
+		);
+
+		for (int pieceRow = CurrentPiece.Shape.Count - 1; pieceRow >= 0; --pieceRow)
+		{
+			for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
+			{
+				//if (Grid[pieceRow + nextPos.x][pieceColumn + nextPos.y] )
+				if (nextPos.y + pieceRow >= Rows)
+				{
+					// landed! don't continue falling
+					yield break;
+				}
+			}
+		}
+
+		//------------------------------------------
+
+		
+		CurrentPiece.topLeftPos = nextPos;
 		StartCoroutine(Fall());
 	}
 }

@@ -73,10 +73,10 @@ public class PlayfieldView : MonoBehaviour
 		int gridPosX = piece.topLeftPos.x;
 		int gridPosY;
 
-		foreach (var row in piece.Shape)
+		foreach (var pieceRow in piece.Shape)
 		{
 			gridPosY = piece.topLeftPos.y;
-			foreach (var col in row)
+			foreach (var pieceColumn in pieceRow)
 			{
 				PlaceBlock(gridPosX, gridPosY);
 				gridPosY++;
