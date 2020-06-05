@@ -9,13 +9,12 @@ public class Playfield : MonoBehaviour
 
 	[SerializeField]
 	private int rows;
-	
-	private List<List<int>> grid = new List<List<int>>();
+
+	public List<List<int>> Grid { get; } = new List<List<int>>();
 
 	private void Awake()
 	{
 		InitGrid();
-		Print();
 	}
 
 	private void InitGrid()
@@ -27,22 +26,7 @@ public class Playfield : MonoBehaviour
 			{
 				row.Add(0);
 			}
-			grid.Add(row);
-		}
-	}
-
-	private void Print()
-	{
-		string output;
-
-		foreach (var row in grid)
-		{
-			output = "";
-			foreach (var cell in row)
-			{
-				output += cell + " ";
-			}
-			Debug.Log(output);
+			Grid.Add(row);
 		}
 	}
 }
