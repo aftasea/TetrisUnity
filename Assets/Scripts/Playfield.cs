@@ -54,19 +54,6 @@ public class Playfield : MonoBehaviour
 	private void SpawnShape()
 	{
 		CurrentPiece = new PieceDefinition();
-		//int gridPosX = piece.topLeftPos.x;
-		//int gridPosY;
-
-		//foreach (var row in piece.Shape)
-		//{
-		//	gridPosY = piece.topLeftPos.y;
-		//	foreach (var col in row)
-		//	{
-		//		Grid[gridPosX][gridPosY] = 1;
-		//		gridPosY++;
-		//	}
-		//	gridPosX++;
-		//}
 	}
 
 	private IEnumerator Fall()
