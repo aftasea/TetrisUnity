@@ -14,6 +14,35 @@ public class Playfield : MonoBehaviour
 
 	private void Awake()
 	{
+		InitGrid();
+		Print();
+	}
 
+	private void InitGrid()
+	{
+		for (int r = 0; r < rows; ++r)
+		{
+			List<int> row = new List<int>();
+			for (int c = 0; c < columns; ++c)
+			{
+				row.Add(0);
+			}
+			grid.Add(row);
+		}
+	}
+
+	private void Print()
+	{
+		string output;
+
+		foreach (var row in grid)
+		{
+			output = "";
+			foreach (var cell in row)
+			{
+				output += cell + " ";
+			}
+			Debug.Log(output);
+		}
 	}
 }
