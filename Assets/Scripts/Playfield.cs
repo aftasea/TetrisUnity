@@ -35,7 +35,7 @@ public class Playfield : MonoBehaviour
 	{
 		InitGrid();
 		SpawnShape();
-		StartCoroutine("Fall");
+		StartCoroutine(Fall());
 	}
 
 	private void InitGrid()
@@ -60,6 +60,6 @@ public class Playfield : MonoBehaviour
 	{
 		yield return new WaitForSeconds(initialFallTime);
 		CurrentPiece.topLeftPos.y++;
-		StartCoroutine("Fall");
+		StartCoroutine(Fall());
 	}
 }
