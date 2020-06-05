@@ -18,9 +18,17 @@ public class Playfield : MonoBehaviour
 		get { return rows; }
 	}
 
+	[Tooltip("Speed in seconds per unit")]
+	[SerializeField]
+	private float initialFallTime = 1f;
+
 	public List<List<int>> Grid { get; } = new List<List<int>>();
 
-	private Piece piece = new Piece();
+	public PieceDefinition CurrentPiece
+	{
+		get;
+		private set;
+	}
 	
 
 	private void Awake()
@@ -45,24 +53,26 @@ public class Playfield : MonoBehaviour
 
 	private void SpawnShape()
 	{
-		int gridPosX = piece.topLeftPos.x;
-		int gridPosY;
+		CurrentPiece = new PieceDefinition();
+		//int gridPosX = piece.topLeftPos.x;
+		//int gridPosY;
 
-		foreach (var row in piece.Shape)
-		{
-			gridPosY = piece.topLeftPos.y;
-			foreach (var col in row)
-			{
-				Grid[gridPosX][gridPosY] = 1;
-				gridPosY++;
-			}
-			gridPosX++;
-		}
+		//foreach (var row in piece.Shape)
+		//{
+		//	gridPosY = piece.topLeftPos.y;
+		//	foreach (var col in row)
+		//	{
+		//		Grid[gridPosX][gridPosY] = 1;
+		//		gridPosY++;
+		//	}
+		//	gridPosX++;
+		//}
 	}
 
 	private IEnumerator Fall()
 	{
-		yield return new WaitForSeconds(1f);
-		piece.topLeftPos.y++;
+		yield return new WaitForSeconds(initialFallTime);
+		CurrentPiece.topLeftPos.y++;
+		StartCoroutine("Fall");
 	}
 }

@@ -17,13 +17,13 @@ public class PlayfieldLayout : MonoBehaviour
 
 	private void CreateGrid()
 	{
-		Transform parent = transform;
+		Transform parentObject = transform;
 
 		for (int r = 0; r < playfield.Rows; ++r)
 		{
 			for (int c = 0; c < playfield.Columns; ++c)
 			{
-				Instantiate(gridCellPrefab, new Vector3(c, -r, 0), Quaternion.identity, parent);
+				Instantiate(gridCellPrefab, new Vector3(c, -r, 0), Quaternion.identity, parentObject);
 			}
 		}
 	}

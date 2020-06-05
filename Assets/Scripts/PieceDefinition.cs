@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece
+public class PieceDefinition
 {
 	private List<List<int>> shape = new List<List<int>> {
 		new List<int>{ 1, 1 },
