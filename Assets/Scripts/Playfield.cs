@@ -62,7 +62,7 @@ public class Playfield : MonoBehaviour
 		
 		if (CanFall())
 		{
-			CurrentPiece.topLeftPos.x++;
+			CurrentPiece.topLeftPos.row++;
 			StartCoroutine(Fall());
 		}
 		else
@@ -73,7 +73,7 @@ public class Playfield : MonoBehaviour
 
 	private bool CanFall()
 	{
-		int nextRow = CurrentPiece.topLeftPos.x + 1;
+		int nextRow = CurrentPiece.topLeftPos.row + 1;
 		//Vector2Int nextPos = new Vector2Int(
 		//	CurrentPiece.topLeftPos.x + 1,
 		//	CurrentPiece.topLeftPos.y + 1
@@ -103,8 +103,8 @@ public class Playfield : MonoBehaviour
 				var shapeValue = CurrentPiece.Shape[pieceRow][pieceColumn];
 				if (shapeValue != 0)
 				{
-					int gridRow = CurrentPiece.topLeftPos.x + pieceRow;
-					int gridColumn = CurrentPiece.topLeftPos.y + pieceColumn;
+					int gridRow = CurrentPiece.topLeftPos.row + pieceRow;
+					int gridColumn = CurrentPiece.topLeftPos.col + pieceColumn;
 					Grid[gridRow][gridColumn] = shapeValue;
 				}
 			}

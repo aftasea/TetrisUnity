@@ -13,5 +13,5 @@ public class PieceDefinition
 		get { return shape; }
 	}
 
-	public Vector2Int topLeftPos = new Vector2Int(0, 0);
+	public GridPosition topLeftPos = new GridPosition(0, 0);
 }
