@@ -52,6 +52,18 @@ public class PlayfieldView : MonoBehaviour
 
 	private void DrawLanded()
 	{
+		GridPosition pos = new GridPosition(0, 0);
+		foreach (var row in playfield.Grid)
+		{
+			pos.col = 0;
+			foreach (var colum in row)
+			{
+				if (playfield.Grid[pos.row][pos.col] != 0)
+					PlaceBlock(pos.row, pos.col);
+				pos.col++;
+			}
+			pos.row++;
+		}
 	}
 
 	private void DrawCurrentPiece()
@@ -63,9 +75,10 @@ public class PlayfieldView : MonoBehaviour
 		foreach (var pieceRow in piece.Shape)
 		{
 			gridColumn = piece.topLeftPos.col;
-			foreach (var pieceColumn in pieceRow)
+			foreach (var cell in pieceRow)
 			{
-				PlaceBlock(gridRow, gridColumn);
+				if (cell != 0)
+					PlaceBlock(gridRow, gridColumn);
 				gridColumn++;
 			}
 			gridRow++;

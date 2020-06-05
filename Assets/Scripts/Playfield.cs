@@ -35,7 +35,6 @@ public class Playfield : MonoBehaviour
 	{
 		InitGrid();
 		SpawnShape();
-		StartCoroutine(Fall());
 	}
 
 	private void InitGrid()
@@ -54,6 +53,7 @@ public class Playfield : MonoBehaviour
 	private void SpawnShape()
 	{
 		CurrentPiece = new PieceDefinition();
+		StartCoroutine(Fall());
 	}
 
 	private IEnumerator Fall()
@@ -109,5 +109,6 @@ public class Playfield : MonoBehaviour
 				}
 			}
 		}
+		SpawnShape();
 	}
 }
