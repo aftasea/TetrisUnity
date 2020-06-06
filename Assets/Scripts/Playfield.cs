@@ -5,6 +5,7 @@ using UnityEngine;
 public class Playfield : MonoBehaviour
 {
 	public event System.Action<int> OnLinesCleared;
+	public event System.Action OnGameOver;
 
 	[SerializeField]
 	private int columns = 10;
@@ -88,6 +89,7 @@ public class Playfield : MonoBehaviour
 	private void GameOver()
 	{
 		RemoveEventListeners();
+		OnGameOver();
 		Debug.Log("GameOver");
 	}
 

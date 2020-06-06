@@ -14,8 +14,15 @@ public class ScoreManager : MonoBehaviour
 	private int pointsPerTetris = 8;
 
 	private Playfield playfield;
+	private string scoreKey = "score";
 
 	public int Score
+	{
+		get;
+		private set;
+	}
+
+	public int BestScore
 	{
 		get;
 		private set;
@@ -24,12 +31,27 @@ public class ScoreManager : MonoBehaviour
 	private void Awake()
 	{
 		playfield = GetComponent<Playfield>();
-		playfield.OnLinesCleared += AddPoints;
+
+		AddEventListeners();
+
+		BestScore = Persistence.GetInt(scoreKey);
 	}
 
 	private void OnDestroy()
 	{
-		playfield.OnLinesCleared -= AddPoints;
+		RemoveEventListeners();
+	}
+
+	private void AddEventListeners()
+	{
+		playfield.OnLinesCleared += AddPoints;
+		playfield.OnGameOver += UpdateHighScore;
+	}
+
+	private void RemoveEventListeners()
+	{
+		playfield.OnLinesCleared += AddPoints;
+		playfield.OnLinesCleared += AddPoints;
 	}
 
 	private void AddPoints(int lineCount)
@@ -49,5 +71,11 @@ public class ScoreManager : MonoBehaviour
 				Score += pointsPerSingle;
 				break;
 		}
+	}
+
+	private void UpdateHighScore()
+	{
+		if (Score > BestScore)
+			Persistence.SetInt(scoreKey, Score);
 	}
 }
