@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum ShapeType
+public enum ShapeType
 {
 	None,
 	I,

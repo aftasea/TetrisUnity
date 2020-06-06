@@ -26,8 +26,17 @@ public class Piece
 		return shapeRotations[index];
 	}
 
-	public void Rotate()
+	public void Rotate(Rotation direction)
 	{
-		rotationIndex = (rotationIndex + 1) % shapeRotations.Length;
+		if (direction == Rotation.Clockwise)
+		{
+			rotationIndex = (rotationIndex + 1) % shapeRotations.Length;
+		}
+		else
+		{
+			rotationIndex = (rotationIndex - 1) % shapeRotations.Length;
+			if (rotationIndex < 0)
+				rotationIndex += shapeRotations.Length;
+		}
 	}
 }

@@ -2,30 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Rotation
+{
+	Clockwise,
+	Counterclockwise
+}
+
+public enum Move
+{
+	Left,
+	Right
+}
+
 public class InputHandler : MonoBehaviour
 {
-	public enum MoveAction
-	{
-		Left,
-		Right
-	}
 
-	public event System.Action<MoveAction> OnMovePressed;
-	public event System.Action OnRotatePressed;
+	public event System.Action<Move> OnMovePressed;
+	public event System.Action<Rotation> OnRotatePressed;
 
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			OnMovePressed?.Invoke(MoveAction.Left);
+			OnMovePressed?.Invoke(Move.Left);
 		}
-		if (Input.GetKeyDown(KeyCode.RightArrow))
+		else if (Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			OnMovePressed?.Invoke(MoveAction.Right);
+			OnMovePressed?.Invoke(Move.Right);
 		}
-		if (Input.GetKeyDown(KeyCode.UpArrow))
+		else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X))
 		{
-			OnRotatePressed?.Invoke();
+			OnRotatePressed?.Invoke(Rotation.Clockwise);
+		}
+		else if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Z))
+		{
+			OnRotatePressed?.Invoke(Rotation.Counterclockwise);
 		}
 	}
 }

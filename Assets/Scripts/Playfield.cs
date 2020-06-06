@@ -130,25 +130,25 @@ public class Playfield : MonoBehaviour
 		return !WillCollide(ref nextPos, CurrentPiece.Shape);
 	}
 
-	private void MovePiece(InputHandler.MoveAction action)
+	private void MovePiece(Move direction)
 	{
 		GridPosition nextPos = CurrentPiece.topLeftPos;
 
-		if (action == InputHandler.MoveAction.Left)
+		if (direction == Move.Left)
 			nextPos.col--;
-		else if (action == InputHandler.MoveAction.Right)
+		else if (direction == Move.Right)
 			nextPos.col++;
 
 		if (!WillCollide(ref nextPos, CurrentPiece.Shape))
 			CurrentPiece.topLeftPos = nextPos;
 	}
 
-	private void RotatePiece()
+	private void RotatePiece(Rotation direction)
 	{
 		int[,] rotatedShape = CurrentPiece.GetRotatedShape();
 
 		if (!WillCollide(ref CurrentPiece.topLeftPos, rotatedShape))
-			CurrentPiece.Rotate();
+			CurrentPiece.Rotate(direction);
 	}
 
 	private void LandPiece()
