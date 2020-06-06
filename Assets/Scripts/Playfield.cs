@@ -39,6 +39,7 @@ public class Playfield : MonoBehaviour
 		pieceSelector = GetComponent<PieceSelector>();
 
 		input.OnMovePressed += MovePiece;
+		input.OnRotatePressed += RotatePiece;
 
 		InitGrid();
 		SpawnShape();
@@ -83,26 +84,13 @@ public class Playfield : MonoBehaviour
 		}
 	}
 
-	private void MovePiece(InputHandler.Action action)
+	private bool WillCollide(ref GridPosition nextPos, int[,] shape)
 	{
-		GridPosition nextPos = CurrentPiece.topLeftPos;
-
-		if (action == InputHandler.Action.MoveLeft)
-			nextPos.col--;
-		else if(action == InputHandler.Action.MoveRight)
-			nextPos.col++;
-
-		if (!WillCollide(nextPos))
-			CurrentPiece.topLeftPos = nextPos;
-	}
-
-	private bool WillCollide(GridPosition nextPos)
-	{
-		for (int r = 0; r < CurrentPiece.Shape.GetLength(0); ++r)
+		for (int r = 0; r < shape.GetLength(0); ++r)
 		{
-			for (int c = 0; c < CurrentPiece.Shape.GetLength(1); ++c)
+			for (int c = 0; c < shape.GetLength(1); ++c)
 			{
-				var shapeValue = CurrentPiece.Shape[r, c];
+				var shapeValue = shape[r, c];
 				if (shapeValue != 0)
 				{
 					if (nextPos.col + c < 0)
@@ -139,7 +127,28 @@ public class Playfield : MonoBehaviour
 		GridPosition nextPos = CurrentPiece.topLeftPos;
 		nextPos.row++;
 
-		return !WillCollide(nextPos);
+		return !WillCollide(ref nextPos, CurrentPiece.Shape);
+	}
+
+	private void MovePiece(InputHandler.MoveAction action)
+	{
+		GridPosition nextPos = CurrentPiece.topLeftPos;
+
+		if (action == InputHandler.MoveAction.Left)
+			nextPos.col--;
+		else if (action == InputHandler.MoveAction.Right)
+			nextPos.col++;
+
+		if (!WillCollide(ref nextPos, CurrentPiece.Shape))
+			CurrentPiece.topLeftPos = nextPos;
+	}
+
+	private void RotatePiece()
+	{
+		int[,] rotatedShape = CurrentPiece.GetRotatedShape();
+
+		if (!WillCollide(ref CurrentPiece.topLeftPos, rotatedShape))
+			CurrentPiece.Rotate();
 	}
 
 	private void LandPiece()

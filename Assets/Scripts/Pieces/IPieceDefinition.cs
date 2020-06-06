@@ -5,7 +5,7 @@
 		get;
 	}
 
-	int[,] Shape
+	int[][,] ShapeRotations
 	{
 		get;
 	}

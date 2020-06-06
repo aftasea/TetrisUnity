@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-	public enum Action
+	public enum MoveAction
 	{
-		MoveLeft,
-		MoveRight
+		Left,
+		Right
 	}
 
-	public event System.Action<Action> OnMovePressed;
+	public event System.Action<MoveAction> OnMovePressed;
+	public event System.Action OnRotatePressed;
 
-    void Update()
+	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			OnMovePressed?.Invoke(Action.MoveLeft);
+			OnMovePressed?.Invoke(MoveAction.Left);
 		}
 		if (Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			OnMovePressed?.Invoke(Action.MoveRight);
+			OnMovePressed?.Invoke(MoveAction.Right);
+		}
+		if (Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			OnRotatePressed?.Invoke();
 		}
 	}
 }
