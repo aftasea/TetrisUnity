@@ -607,6 +607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2023850658}
   - component: {fileID: 2023850657}
+  - component: {fileID: 2023850659}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -628,7 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 10
   rows: 20
-  initialFallTime: 0.2
+  initialFallTime: 0.1
 --- !u!4 &2023850658
 Transform:
   m_ObjectHideFlags: 0
@@ -643,3 +644,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2023850659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023850656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c910fe9e4ac0e40b2afe22b76b304ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testPiece:
+    bar: 0
+  pieces: []

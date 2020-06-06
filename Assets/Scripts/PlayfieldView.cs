@@ -68,7 +68,7 @@ public class PlayfieldView : MonoBehaviour
 
 	private void DrawCurrentPiece()
 	{
-		PieceDefinition piece = playfield.CurrentPiece;
+		Piece piece = playfield.CurrentPiece;
 		int gridRow = piece.topLeftPos.row;
 		int gridColumn;
 

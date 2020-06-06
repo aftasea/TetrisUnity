@@ -24,7 +24,7 @@ public class Playfield : MonoBehaviour
 
 	public List<List<int>> Grid { get; } = new List<List<int>>();
 
-	public PieceDefinition CurrentPiece
+	public Piece CurrentPiece
 	{
 		get;
 		private set;
@@ -52,7 +52,7 @@ public class Playfield : MonoBehaviour
 
 	private void SpawnShape()
 	{
-		CurrentPiece = new PieceDefinition();
+		CurrentPiece = new Piece();
 		StartCoroutine(Fall());
 	}
 
@@ -74,21 +74,23 @@ public class Playfield : MonoBehaviour
 	private bool CanFall()
 	{
 		int nextRow = CurrentPiece.topLeftPos.row + 1;
-		//Vector2Int nextPos = new Vector2Int(
-		//	CurrentPiece.topLeftPos.x + 1,
-		//	CurrentPiece.topLeftPos.y + 1
-		//);
 
 		for (int pieceRow = CurrentPiece.Shape.Count - 1; pieceRow >= 0; --pieceRow)
 		{
-			//for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
-			//{
-				if (nextRow + pieceRow >= Rows)
+			if (nextRow + pieceRow >= Rows)
+			{
+				// landed! don't continue falling
+				return false;
+			}
+
+			for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
+			{
+				if (Grid[nextRow + pieceRow][pieceColumn] != 0)
 				{
-					// landed! don't continue falling
+					// another block is in place
 					return false;
 				}
-			//}
+			}
 		}
 
 		return true;

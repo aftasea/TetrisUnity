@@ -1,4 +1,5 @@
-﻿public struct GridPosition
+﻿[System.Serializable]
+public struct GridPosition
 {
 	public GridPosition(int row, int column)
 	{
