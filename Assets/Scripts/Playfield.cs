@@ -52,15 +52,7 @@ public class Playfield : MonoBehaviour
 
 	private void InitGrid()
 	{
-		for (int r = 0; r < rows; ++r)
-		{
-			List<int> row = new List<int>();
-			for (int c = 0; c < columns; ++c)
-			{
-				row.Add(0);
-			}
-			Grid.Add(row);
-		}
+		AddNewEmptyLines(rows);
 	}
 
 	private void SpawnShape()
@@ -166,6 +158,62 @@ public class Playfield : MonoBehaviour
 				}
 			}
 		}
+
+		CheckCompletedLines();
 		SpawnShape();
+	}
+
+	private void CheckCompletedLines()
+	{
+		List<int> completedLineIndexes = GetCompletedLines();
+
+		if (completedLineIndexes.Count > 0)
+		{
+			ClearLines(completedLineIndexes);
+			AddNewEmptyLines(completedLineIndexes.Count);			
+		}
+	}
+
+	private List<int> GetCompletedLines()
+	{
+		List<int> completedLineIndexes = new List<int>();
+
+		for (int r = Grid.Count - 1; r >= 0; --r)
+		{
+			int blocksInRow = 0;
+			foreach (var cell in Grid[r])
+			{
+				if (cell == 0)
+					break;
+
+				++blocksInRow;
+			}
+
+			if (blocksInRow == Grid[r].Count)
+				completedLineIndexes.Add(r);
+		}
+
+		return completedLineIndexes;
+	}
+
+	private void ClearLines(List<int> completedLineIndexes)
+	{
+		foreach (int i in completedLineIndexes)
+		{
+			Grid.RemoveAt(i);
+		}
+	}
+
+	private void AddNewEmptyLines(int lineCount)
+	{
+		for (int r = 0; r < lineCount; ++r)
+		{
+			List<int> row = new List<int>();
+			for (int c = 0; c < columns; ++c)
+			{
+				row.Add(0);
+			}
+			Grid.Insert(0, row);
+		}
 	}
 }
