@@ -656,6 +656,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c910fe9e4ac0e40b2afe22b76b304ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPiece:
-    bar: 0
+  testPos:
+    row: 0
+    col: 0
+  testPiece: {fileID: 11400000, guid: c5700f13695da40878dd9c836584d802, type: 2}
   pieces: []

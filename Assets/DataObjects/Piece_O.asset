@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090c96fd4768c444d83dad026125e4d9, type: 3}
   m_Name: Piece_O
   m_EditorClassIdentifier: 
-  bar: 0
-  myVec2: {x: 0, y: 0}
   spawnPosition:
     row: 0
-    col: 0
+    col: 2

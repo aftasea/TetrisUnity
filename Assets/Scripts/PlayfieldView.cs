@@ -87,11 +87,4 @@ public class PlayfieldView : MonoBehaviour
 		block.SetActive(true);
 		block.transform.position = new Vector2(column, -row);
 	}
-
-	private string FormatColor(string str, Color color)
-	{
-		return "<color=#" + ColorUtility.ToHtmlStringRGBA(color) + ">"
-			+ str
-			+ "</color>";
-	}
 }

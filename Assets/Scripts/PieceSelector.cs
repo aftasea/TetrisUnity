@@ -20,12 +20,13 @@ public class PieceSelector : MonoBehaviour
 	public PieceDefinition testPiece;
 
 	[SerializeField]
-	private PieceDefinition[] pieces;
+	private IPieceDefinition[] pieces = { new PieceO(), new PieceZ() };
 
 	public Piece GetRandomPiece()
 	{
-		Piece piece = new Piece(testPiece.shape);
-		piece.topLeftPos = testPiece.spawnPosition;
+		IPieceDefinition pieceDef = pieces[Random.Range(0, pieces.Length)];
+		Piece piece = new Piece(pieceDef.Shape);
+		piece.topLeftPos = pieceDef.SpawnPosition;
 		return piece;
 	}
 }
