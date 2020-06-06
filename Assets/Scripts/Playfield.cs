@@ -23,6 +23,7 @@ public class Playfield : MonoBehaviour
 	private float initialFallTime = 1f;
 
 	private PieceSelector pieceSelector;
+	private InputHandler input;
 
 	public List<List<int>> Grid { get; } = new List<List<int>>();
 
@@ -34,9 +35,18 @@ public class Playfield : MonoBehaviour
 
 	private void Awake()
 	{
+		input = GetComponent<InputHandler>();
 		pieceSelector = GetComponent<PieceSelector>();
+
+		input.OnMovePressed += MovePiece;
+
 		InitGrid();
 		SpawnShape();
+	}
+
+	private void OnDestroy()
+	{
+		input.OnMovePressed -= MovePiece;
 	}
 
 	private void InitGrid()
@@ -70,7 +80,52 @@ public class Playfield : MonoBehaviour
 		else
 		{
 			LandPiece();
-		}		
+		}
+	}
+
+	private void MovePiece(InputHandler.Action action)
+	{
+		GridPosition nextPos = CurrentPiece.topLeftPos;
+
+		if (action == InputHandler.Action.MoveLeft)
+			nextPos.col--;
+		else if(action == InputHandler.Action.MoveRight)
+			nextPos.col++;
+
+		if (CanMove(nextPos))
+			CurrentPiece.topLeftPos = nextPos;
+	}
+
+	private bool CanMove(GridPosition nextPos)
+	{
+		for (int r = 0; r < CurrentPiece.Shape.GetLength(0); ++r)
+		{
+			for (int c = 0; c < CurrentPiece.Shape.GetLength(1); ++c)
+			{
+				var shapeValue = CurrentPiece.Shape[r, c];
+				if (shapeValue != 0)
+				{
+					if (nextPos.col + c < 0)
+					{
+						// beyonf left limit. Can't move!
+						return false;
+					}
+
+					if (nextPos.col + c >= Columns)
+					{
+						// beyonf right limit. Can't move!
+						return false;
+					}
+
+					if (Grid[nextPos.row + r][nextPos.col + c] != 0)
+					{
+						// another block is in place
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	private bool CanFall()
