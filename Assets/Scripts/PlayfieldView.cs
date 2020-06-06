@@ -69,19 +69,14 @@ public class PlayfieldView : MonoBehaviour
 	private void DrawCurrentPiece()
 	{
 		Piece piece = playfield.CurrentPiece;
-		int gridRow = piece.topLeftPos.row;
-		int gridColumn;
 
-		foreach (var pieceRow in piece.Shape)
+		for (int r = 0; r < piece.Shape.GetLength(0); ++r)
 		{
-			gridColumn = piece.topLeftPos.col;
-			foreach (var cell in pieceRow)
+			for (int c = 0; c < piece.Shape.GetLength(1); ++c)
 			{
-				if (cell != 0)
-					PlaceBlock(gridRow, gridColumn);
-				gridColumn++;
+				if (piece.Shape[r, c] != 0)
+					PlaceBlock(piece.topLeftPos.row + r, piece.topLeftPos.col + c);
 			}
-			gridRow++;
 		}
 	}
 

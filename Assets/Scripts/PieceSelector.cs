@@ -16,13 +16,16 @@ enum ShapeType
 
 public class PieceSelector : MonoBehaviour
 {
-	public Piece testPiece;
+	public GridPosition testPos;
+	public PieceDefinition testPiece;
 
 	[SerializeField]
-	private Piece[] pieces;
+	private PieceDefinition[] pieces;
 
 	public Piece GetRandomPiece()
 	{
-		return pieces[1];
+		Piece piece = new Piece(testPiece.shape);
+		piece.topLeftPos = testPiece.spawnPosition;
+		return piece;
 	}
 }

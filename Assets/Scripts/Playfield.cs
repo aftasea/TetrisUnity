@@ -22,17 +22,19 @@ public class Playfield : MonoBehaviour
 	[SerializeField]
 	private float initialFallTime = 1f;
 
+	private PieceSelector pieceSelector;
+
 	public List<List<int>> Grid { get; } = new List<List<int>>();
 
 	public Piece CurrentPiece
 	{
 		get;
 		private set;
-	}
-	
+	}	
 
 	private void Awake()
 	{
+		pieceSelector = GetComponent<PieceSelector>();
 		InitGrid();
 		SpawnShape();
 	}
@@ -52,7 +54,7 @@ public class Playfield : MonoBehaviour
 
 	private void SpawnShape()
 	{
-		CurrentPiece = new Piece();
+		CurrentPiece = pieceSelector.GetRandomPiece();
 		StartCoroutine(Fall());
 	}
 
@@ -73,22 +75,27 @@ public class Playfield : MonoBehaviour
 
 	private bool CanFall()
 	{
-		int nextRow = CurrentPiece.topLeftPos.row + 1;
+		GridPosition nextPos = CurrentPiece.topLeftPos;
+		nextPos.row++;
 
-		for (int pieceRow = CurrentPiece.Shape.Count - 1; pieceRow >= 0; --pieceRow)
+		for (int r = 0; r < CurrentPiece.Shape.GetLength(0); ++r)
 		{
-			if (nextRow + pieceRow >= Rows)
+			for (int c = 0; c < CurrentPiece.Shape.GetLength(1); ++c)
 			{
-				// landed! don't continue falling
-				return false;
-			}
-
-			for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
-			{
-				if (Grid[nextRow + pieceRow][pieceColumn] != 0)
+				var shapeValue = CurrentPiece.Shape[r, c];
+				if (shapeValue != 0)
 				{
-					// another block is in place
-					return false;
+					if (nextPos.row + r >= Rows)
+					{
+						// landed! don't continue falling
+						return false;
+					}
+
+					if (Grid[nextPos.row + r][nextPos.col + c] != 0)
+					{
+						// another block is in place
+						return false;
+					}
 				}
 			}
 		}
@@ -98,15 +105,15 @@ public class Playfield : MonoBehaviour
 
 	private void LandPiece()
 	{
-		for (int pieceRow = CurrentPiece.Shape.Count - 1; pieceRow >= 0; --pieceRow)
+		for (int r = 0; r < CurrentPiece.Shape.GetLength(0); ++r)
 		{
-			for (int pieceColumn = CurrentPiece.Shape[pieceRow].Count - 1; pieceColumn >= 0; --pieceColumn)
+			for (int c = 0; c < CurrentPiece.Shape.GetLength(1); ++c)
 			{
-				var shapeValue = CurrentPiece.Shape[pieceRow][pieceColumn];
+				var shapeValue = CurrentPiece.Shape[r, c];
 				if (shapeValue != 0)
 				{
-					int gridRow = CurrentPiece.topLeftPos.row + pieceRow;
-					int gridColumn = CurrentPiece.topLeftPos.col + pieceColumn;
+					int gridRow = CurrentPiece.topLeftPos.row + r;
+					int gridColumn = CurrentPiece.topLeftPos.col + c;
 					Grid[gridRow][gridColumn] = shapeValue;
 				}
 			}

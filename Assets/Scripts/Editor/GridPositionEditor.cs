@@ -8,18 +8,22 @@ public class GridPositionDrawer : PropertyDrawer
 	{
 		SerializedProperty row = property.FindPropertyRelative("row");
 		SerializedProperty col = property.FindPropertyRelative("col");
+		
+		int recordedIndentLevel = EditorGUI.indentLevel;
 
 		Rect mainLabelRect = position;
 		mainLabelRect.width = EditorGUIUtility.labelWidth;
 		EditorGUI.LabelField(mainLabelRect, label);
-
+		
 		Rect fieldRect = position;
 		fieldRect.x += mainLabelRect.width;
 		const int propertyCount = 2;
 		fieldRect.width = ((position.width - mainLabelRect.width) / propertyCount);
-
+		
+		EditorGUI.indentLevel = 0;
 		DrawField("Row", ref fieldRect, row);
 		DrawField(" Col", ref fieldRect, col);
+		EditorGUI.indentLevel = recordedIndentLevel;
 	}
 
 	private void DrawField(string label, ref Rect rect, SerializedProperty property)
