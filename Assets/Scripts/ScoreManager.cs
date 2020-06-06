@@ -50,8 +50,8 @@ public class ScoreManager : MonoBehaviour
 
 	private void RemoveEventListeners()
 	{
-		playfield.OnLinesCleared += AddPoints;
-		playfield.OnLinesCleared += AddPoints;
+		playfield.OnLinesCleared -= AddPoints;
+		playfield.OnGameOver -= UpdateHighScore;
 	}
 
 	private void AddPoints(int lineCount)
