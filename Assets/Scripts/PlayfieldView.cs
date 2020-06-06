@@ -19,9 +19,12 @@ public class PlayfieldView : MonoBehaviour
 
 	private void Update()
 	{
-		ClearBlocks();
-		DrawLanded();
-		DrawCurrentPiece();
+		if (Game.IsRunning)
+		{
+			ClearBlocks();
+			DrawLanded();
+			DrawCurrentPiece();
+		}
 	}
 
 	void InstantiateBlocks()

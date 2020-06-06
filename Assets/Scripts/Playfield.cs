@@ -41,24 +41,24 @@ public class Playfield : MonoBehaviour
 		input = GetComponent<InputHandler>();
 		pieceSelector = GetComponent<PieceSelector>();
 
-		AddEventListeners();
-
+		Game.OnGameStart += StartGame;
+		
 		InitGrid();
-		SpawnShape();
 	}
 
 	private void OnDestroy()
 	{
-		RemoveEventListeners();
+		RemoveInputEventListeners();
+		Game.OnGameStart -= StartGame;
 	}
 
-	private void AddEventListeners()
+	private void AddInputEventListeners()
 	{
 		input.OnMovePressed += MovePiece;
 		input.OnRotatePressed += RotatePiece;
 	}
 
-	private void RemoveEventListeners()
+	private void RemoveInputEventListeners()
 	{
 		input.OnMovePressed -= MovePiece;
 		input.OnRotatePressed -= RotatePiece;
@@ -67,6 +67,12 @@ public class Playfield : MonoBehaviour
 	private void InitGrid()
 	{
 		AddNewEmptyLines(rows);
+	}
+
+	public void StartGame()
+	{
+		AddInputEventListeners();
+		SpawnShape();
 	}
 
 	private void SpawnShape()
@@ -88,9 +94,9 @@ public class Playfield : MonoBehaviour
 
 	private void GameOver()
 	{
-		RemoveEventListeners();
-		OnGameOver();
-		Debug.Log("GameOver");
+		RemoveInputEventListeners();
+		OnGameOver?.Invoke();
+		Game.GameOver();
 	}
 
 	private IEnumerator Fall()
