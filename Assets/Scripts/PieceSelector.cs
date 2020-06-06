@@ -6,12 +6,12 @@ enum ShapeType
 {
 	None,
 	I,
-	O,
-	T,
-	S,
-	Z,
 	J,
-	L
+	L,
+	O,
+	S,
+	T,
+	Z
 }
 
 public class PieceSelector : MonoBehaviour
@@ -20,7 +20,11 @@ public class PieceSelector : MonoBehaviour
 	public PieceDefinition testPiece;
 
 	[SerializeField]
-	private IPieceDefinition[] pieces = { new PieceO(), new PieceZ() };
+	private IPieceDefinition[] pieces = {
+		new PieceI(), new PieceJ(), new PieceL(),
+		new PieceO(), new PieceS(), new PieceT(),
+		new PieceZ()
+	};
 
 	public Piece GetRandomPiece()
 	{
