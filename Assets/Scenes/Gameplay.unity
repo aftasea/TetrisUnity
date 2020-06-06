@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 2023850658}
   - component: {fileID: 2023850657}
   - component: {fileID: 2023850659}
+  - component: {fileID: 2023850660}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -629,7 +630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 10
   rows: 20
-  initialFallTime: 0.1
+  initialFallTime: 0.2
 --- !u!4 &2023850658
 Transform:
   m_ObjectHideFlags: 0
@@ -656,8 +657,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c910fe9e4ac0e40b2afe22b76b304ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPos:
-    row: 0
-    col: 0
-  testPiece: {fileID: 11400000, guid: c5700f13695da40878dd9c836584d802, type: 2}
-  pieces: []
+--- !u!114 &2023850660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023850656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2aa6f3e6c6946e7af265afb1398c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

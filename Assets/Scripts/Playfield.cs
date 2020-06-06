@@ -92,11 +92,11 @@ public class Playfield : MonoBehaviour
 		else if(action == InputHandler.Action.MoveRight)
 			nextPos.col++;
 
-		if (CanMove(nextPos))
+		if (!WillCollide(nextPos))
 			CurrentPiece.topLeftPos = nextPos;
 	}
 
-	private bool CanMove(GridPosition nextPos)
+	private bool WillCollide(GridPosition nextPos)
 	{
 		for (int r = 0; r < CurrentPiece.Shape.GetLength(0); ++r)
 		{
@@ -107,25 +107,31 @@ public class Playfield : MonoBehaviour
 				{
 					if (nextPos.col + c < 0)
 					{
-						// beyonf left limit. Can't move!
-						return false;
+						// Will collide beyond left border
+						return true;
 					}
 
 					if (nextPos.col + c >= Columns)
 					{
-						// beyonf right limit. Can't move!
-						return false;
+						// Will collide beyond right border
+						return true;
+					}
+
+					if (nextPos.row + r >= Rows)
+					{
+						// Will collide beyond bottom border
+						return true;
 					}
 
 					if (Grid[nextPos.row + r][nextPos.col + c] != 0)
 					{
-						// another block is in place
-						return false;
+						// Another block is in place
+						return true;
 					}
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private bool CanFall()
@@ -133,29 +139,7 @@ public class Playfield : MonoBehaviour
 		GridPosition nextPos = CurrentPiece.topLeftPos;
 		nextPos.row++;
 
-		for (int r = 0; r < CurrentPiece.Shape.GetLength(0); ++r)
-		{
-			for (int c = 0; c < CurrentPiece.Shape.GetLength(1); ++c)
-			{
-				var shapeValue = CurrentPiece.Shape[r, c];
-				if (shapeValue != 0)
-				{
-					if (nextPos.row + r >= Rows)
-					{
-						// landed! don't continue falling
-						return false;
-					}
-
-					if (Grid[nextPos.row + r][nextPos.col + c] != 0)
-					{
-						// another block is in place
-						return false;
-					}
-				}
-			}
-		}
-
-		return true;
+		return !WillCollide(nextPos);
 	}
 
 	private void LandPiece()
