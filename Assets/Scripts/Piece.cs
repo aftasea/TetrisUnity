@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Piece
 {
-	public Piece(int[,] shape)
+	public Piece(IPieceDefinition definition)
 	{
-		Shape = (int[,])shape.Clone();
+		Shape = (int[,])definition.Shape.Clone();
+		topLeftPos = definition.SpawnPosition;
 	}
 
 	public int[,] Shape
