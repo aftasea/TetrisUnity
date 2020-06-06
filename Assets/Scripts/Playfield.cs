@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Playfield : MonoBehaviour
 {
+	public event System.Action<int> OnLinesCleared;
+
 	[SerializeField]
 	private int columns = 10;
 	public int Columns
@@ -38,8 +40,7 @@ public class Playfield : MonoBehaviour
 		input = GetComponent<InputHandler>();
 		pieceSelector = GetComponent<PieceSelector>();
 
-		input.OnMovePressed += MovePiece;
-		input.OnRotatePressed += RotatePiece;
+		AddEventListeners();
 
 		InitGrid();
 		SpawnShape();
@@ -47,7 +48,19 @@ public class Playfield : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		RemoveEventListeners();
+	}
+
+	private void AddEventListeners()
+	{
+		input.OnMovePressed += MovePiece;
+		input.OnRotatePressed += RotatePiece;
+	}
+
+	private void RemoveEventListeners()
+	{
 		input.OnMovePressed -= MovePiece;
+		input.OnRotatePressed -= RotatePiece;
 	}
 
 	private void InitGrid()
@@ -58,7 +71,24 @@ public class Playfield : MonoBehaviour
 	private void SpawnShape()
 	{
 		CurrentPiece = pieceSelector.GetRandomPiece();
-		StartCoroutine(Fall());
+		if (IsGameLost())
+			GameOver();
+		else
+			StartCoroutine(Fall());
+	}
+
+	private bool IsGameLost()
+	{
+		if (IsThereCollision(ref CurrentPiece.topLeftPos, CurrentPiece.Shape))
+			return true;
+
+		return false;
+	}
+
+	private void GameOver()
+	{
+		RemoveEventListeners();
+		Debug.Log("GameOver");
 	}
 
 	private IEnumerator Fall()
@@ -76,7 +106,7 @@ public class Playfield : MonoBehaviour
 		}
 	}
 
-	private bool WillCollide(ref GridPosition nextPos, int[,] shape)
+	private bool IsThereCollision(ref GridPosition pos, int[,] shape)
 	{
 		for (int r = 0; r < shape.GetLength(0); ++r)
 		{
@@ -85,25 +115,25 @@ public class Playfield : MonoBehaviour
 				var shapeValue = shape[r, c];
 				if (shapeValue != 0)
 				{
-					if (nextPos.col + c < 0)
+					if (pos.col + c < 0)
 					{
 						// Will collide beyond left border
 						return true;
 					}
 
-					if (nextPos.col + c >= Columns)
+					if (pos.col + c >= Columns)
 					{
 						// Will collide beyond right border
 						return true;
 					}
 
-					if (nextPos.row + r >= Rows)
+					if (pos.row + r >= Rows)
 					{
 						// Will collide beyond bottom border
 						return true;
 					}
 
-					if (Grid[nextPos.row + r][nextPos.col + c] != 0)
+					if (Grid[pos.row + r][pos.col + c] != 0)
 					{
 						// Another block is in place
 						return true;
@@ -119,7 +149,7 @@ public class Playfield : MonoBehaviour
 		GridPosition nextPos = CurrentPiece.topLeftPos;
 		nextPos.row++;
 
-		return !WillCollide(ref nextPos, CurrentPiece.Shape);
+		return !IsThereCollision(ref nextPos, CurrentPiece.Shape);
 	}
 
 	private void MovePiece(Move direction)
@@ -131,7 +161,7 @@ public class Playfield : MonoBehaviour
 		else if (direction == Move.Right)
 			nextPos.col++;
 
-		if (!WillCollide(ref nextPos, CurrentPiece.Shape))
+		if (!IsThereCollision(ref nextPos, CurrentPiece.Shape))
 			CurrentPiece.topLeftPos = nextPos;
 	}
 
@@ -139,7 +169,7 @@ public class Playfield : MonoBehaviour
 	{
 		int[,] rotatedShape = CurrentPiece.GetRotatedShape();
 
-		if (!WillCollide(ref CurrentPiece.topLeftPos, rotatedShape))
+		if (!IsThereCollision(ref CurrentPiece.topLeftPos, rotatedShape))
 			CurrentPiece.Rotate(direction);
 	}
 
@@ -202,6 +232,7 @@ public class Playfield : MonoBehaviour
 		{
 			Grid.RemoveAt(i);
 		}
+		OnLinesCleared?.Invoke(completedLineIndexes.Count);
 	}
 
 	private void AddNewEmptyLines(int lineCount)
