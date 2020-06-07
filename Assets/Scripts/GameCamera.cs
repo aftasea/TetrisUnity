@@ -23,7 +23,9 @@ public class GameCamera : MonoBehaviour
 
 	private void UpdateCamera()
 	{
-		cam.orthographicSize = (playfield.Rows + verticalOffset) / 2f;
+		int largestGridSide = Mathf.Max(playfield.Rows, playfield.Columns);
+		cam.orthographicSize = (largestGridSide + verticalOffset) / 2f;
+
 		float posX = (playfield.Columns / 2f) - halfUnit;
 		float posY = halfUnit - (playfield.Rows / 2f);
 		cam.transform.position = new Vector3(posX, posY, cam.transform.position.z);
