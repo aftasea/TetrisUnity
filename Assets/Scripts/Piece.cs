@@ -41,5 +41,6 @@ public class Piece
 			if (rotationIndex < 0)
 				rotationIndex += shapeRotations.Length;
 		}
+		AudioManager.Play(SoundId.Rotate);
 	}
 }

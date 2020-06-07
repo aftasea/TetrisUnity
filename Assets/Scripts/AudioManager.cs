@@ -20,9 +20,7 @@ public struct Sfx
 public class AudioManager : MonoBehaviour
 {
 	[SerializeField]
-	private AudioClip landSound;
-	[SerializeField]
-	private Sfx[] soundDefinitions;
+	private Sfx[] soundDefinitions = null;
 
 	private AudioSource audioSource;
 
