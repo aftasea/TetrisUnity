@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class StartScreenUI : MonoBehaviour
+public class MenuScreenUI : MonoBehaviour
 {
 	[SerializeField]
-	private GameObject overlay;
+	private GameObject screen = null;
 	[SerializeField]
-	private GameObject gameOverScreen;
+	private GameObject gameOverScreen = null;
 
 	private Button startButton;
 
@@ -25,16 +25,14 @@ public class StartScreenUI : MonoBehaviour
 
 	private void StartGame()
 	{
-		overlay.SetActive(false);
+		screen.SetActive(false);
 		gameOverScreen.SetActive(false);
-		startButton.gameObject.SetActive(false);
 		Game.StartGame();
 	}
 
 	private void ShowGameOverScreen()
 	{
-		overlay.SetActive(true);
+		screen.SetActive(true);
 		gameOverScreen.SetActive(true);
-		startButton.gameObject.SetActive(true);
 	}
 }

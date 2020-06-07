@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayfieldView : MonoBehaviour
 {
 	[SerializeField]
-	private GameObject blockPrefab;
+	private GameObject blockPrefab = null;
 
 	private Playfield playfield;
 	private Queue<GameObject> availableBlocks = new Queue<GameObject>();

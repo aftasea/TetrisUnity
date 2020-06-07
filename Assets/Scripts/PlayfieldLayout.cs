@@ -5,14 +5,22 @@ using UnityEngine;
 public class PlayfieldLayout : MonoBehaviour
 {
 	[SerializeField]
-	private GameObject gridCellPrefab;
+	private GameObject gridCellPrefab = null;
 
 	private Playfield playfield;
+
+	private List<GameObject> visualObjects = new List<GameObject>();
 
 	private void Awake()
 	{
 		playfield = FindObjectOfType<Playfield>();
+		playfield.OnGridSizeChanged += UpdateGrid;
 		CreateGrid();
+	}
+
+	private void OnDestroy()
+	{
+		playfield.OnGridSizeChanged -= UpdateGrid;
 	}
 
 	private void CreateGrid()
@@ -23,8 +31,18 @@ public class PlayfieldLayout : MonoBehaviour
 		{
 			for (int c = 0; c < playfield.Columns; ++c)
 			{
-				Instantiate(gridCellPrefab, new Vector3(c, -r, 0), Quaternion.identity, parentObject);
+				visualObjects.Add(Instantiate(gridCellPrefab, new Vector3(c, -r, 0), Quaternion.identity, parentObject));
 			}
 		}
+	}
+
+	private void UpdateGrid()
+	{
+		foreach (GameObject o in visualObjects)
+		{
+			Destroy(o);
+		}
+		visualObjects.Clear();
+		CreateGrid();
 	}
 }
