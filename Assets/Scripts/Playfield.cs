@@ -73,9 +73,10 @@ public class Playfield : MonoBehaviour
 		AddNewEmptyLines(rows);
 	}
 
-	public void SetGridSize(int rows)
+	public void SetGridSize(int rows, int cols)
 	{
 		this.rows = rows;
+		this.columns = cols;
 		Grid = new List<List<int>>();
 		InitGrid();
 		OnGridSizeChanged?.Invoke();

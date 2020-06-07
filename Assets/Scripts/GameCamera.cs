@@ -6,7 +6,7 @@ public class GameCamera : MonoBehaviour
 {
 	[Tooltip("Vertical offset from grid in units")]
 	[SerializeField]
-	private int verticalOffset;
+	private int verticalOffset = 2;
 
 	private Playfield playfield;
 	private Camera cam;
@@ -23,9 +23,9 @@ public class GameCamera : MonoBehaviour
 
 	private void UpdateCamera()
 	{
-		cam.orthographicSize = (playfield.Rows + verticalOffset) / 2;
-		Vector3 camPos = cam.transform.position;
-		float posY = halfUnit - (playfield.Rows / 2);
-		cam.transform.position = new Vector3(camPos.x, posY, camPos.z);
+		cam.orthographicSize = (playfield.Rows + verticalOffset) / 2f;
+		float posX = (playfield.Columns / 2f) - halfUnit;
+		float posY = halfUnit - (playfield.Rows / 2f);
+		cam.transform.position = new Vector3(posX, posY, cam.transform.position.z);
 	}
 }
