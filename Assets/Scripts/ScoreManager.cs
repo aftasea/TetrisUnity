@@ -22,11 +22,13 @@ public class ScoreManager : MonoBehaviour
 		private set;
 	}
 
-	public int BestScore
+	public int CurrentBestScore
 	{
 		get;
 		private set;
 	}
+
+	private int previousBestScore;
 
 	private void Awake()
 	{
@@ -34,7 +36,8 @@ public class ScoreManager : MonoBehaviour
 
 		AddEventListeners();
 
-		BestScore = Persistence.GetInt(scoreKey);
+		previousBestScore = Persistence.GetInt(scoreKey);
+		CurrentBestScore = previousBestScore;
 	}
 
 	private void OnDestroy()
@@ -73,12 +76,18 @@ public class ScoreManager : MonoBehaviour
 				Score += pointsPerSingle;
 				break;
 		}
+
+		if (Score > CurrentBestScore)
+			CurrentBestScore = Score;
 	}
 
 	private void UpdateHighScore()
 	{
-		if (Score > BestScore)
-			Persistence.SetInt(scoreKey, Score);
+		if (CurrentBestScore > previousBestScore)
+		{
+			previousBestScore = CurrentBestScore;
+			Persistence.SetInt(scoreKey, CurrentBestScore);
+		}
 	}
 
 	private void ResetScore()

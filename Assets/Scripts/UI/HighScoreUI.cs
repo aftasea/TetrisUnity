@@ -16,6 +16,6 @@ public class HighScoreUI : MonoBehaviour
 
 	private void Update()
 	{
-		scoreLabel.text = scoreManager.BestScore.ToString();
+		scoreLabel.text = scoreManager.CurrentBestScore.ToString();
 	}
 }
