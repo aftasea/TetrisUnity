@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ShapeType
 {
-	None,
+	None = 0,
 	I,
 	J,
 	L,

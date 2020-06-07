@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Piece
 {
-	private readonly int[][,] shapeRotations;
 	private int rotationIndex;
+
+	private IPieceDefinition definition;
 
 	public Piece(IPieceDefinition definition, int columnCount)
 	{
-		shapeRotations = definition.ShapeRotations;
+		this.definition = definition;
 
 		topLeftPos = new GridPosition(0,
 			Mathf.CeilToInt((columnCount - Shape.GetLength(1)) / 2f)
@@ -18,28 +19,28 @@ public class Piece
 
 	public int[,] Shape
 	{
-		get { return shapeRotations[rotationIndex]; }
+		get { return definition.ShapeRotations[rotationIndex]; }
 	}
 
 	public GridPosition topLeftPos = new GridPosition(0, 0);
 
 	public int[,] GetRotatedShape()
 	{
-		int index = (rotationIndex + 1) % shapeRotations.Length;
-		return shapeRotations[index];
+		int index = (rotationIndex + 1) % definition.ShapeRotations.Length;
+		return definition.ShapeRotations[index];
 	}
 
 	public void Rotate(Rotation direction)
 	{
 		if (direction == Rotation.Clockwise)
 		{
-			rotationIndex = (rotationIndex + 1) % shapeRotations.Length;
+			rotationIndex = (rotationIndex + 1) % definition.ShapeRotations.Length;
 		}
 		else
 		{
-			rotationIndex = (rotationIndex - 1) % shapeRotations.Length;
+			rotationIndex = (rotationIndex - 1) % definition.ShapeRotations.Length;
 			if (rotationIndex < 0)
-				rotationIndex += shapeRotations.Length;
+				rotationIndex += definition.ShapeRotations.Length;
 		}
 		AudioManager.Play(SoundId.Rotate);
 	}
