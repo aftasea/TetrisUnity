@@ -19,12 +19,9 @@ public class PlayfieldView : MonoBehaviour
 
 	private void Update()
 	{
-		if (Game.IsRunning)
-		{
-			ClearBlocks();
-			DrawLanded();
-			DrawCurrentPiece();
-		}
+		ClearBlocks();
+		DrawLanded();
+		DrawCurrentPiece();
 	}
 
 	void InstantiateBlocks()
@@ -71,14 +68,22 @@ public class PlayfieldView : MonoBehaviour
 
 	private void DrawCurrentPiece()
 	{
-		Piece piece = playfield.CurrentPiece;
+		if (playfield.CurrentPiece == null)
+			return;
 
-		for (int r = 0; r < piece.Shape.GetLength(0); ++r)
+		int[,] shape = playfield.CurrentPiece.Shape;
+
+		for (int r = 0; r < shape.GetLength(0); ++r)
 		{
-			for (int c = 0; c < piece.Shape.GetLength(1); ++c)
+			for (int c = 0; c < shape.GetLength(1); ++c)
 			{
-				if (piece.Shape[r, c] != 0)
-					PlaceBlock(piece.topLeftPos.row + r, piece.topLeftPos.col + c);
+				if (shape[r, c] != 0)
+				{
+					PlaceBlock(
+						playfield.CurrentPiece.topLeftPos.row + r,
+						playfield.CurrentPiece.topLeftPos.col + c
+					);
+				}
 			}
 		}
 	}
