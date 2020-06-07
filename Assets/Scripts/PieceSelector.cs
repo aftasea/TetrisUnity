@@ -22,10 +22,10 @@ public class PieceSelector : MonoBehaviour
 		new PieceZ()
 	};
 
-	public Piece GetRandomPiece()
+	public Piece GetRandomPiece(int columnCount)
 	{
 		IPieceDefinition pieceDef = pieces[Random.Range(0, pieces.Length)];
-		Piece piece = new Piece(pieceDef);
+		Piece piece = new Piece(pieceDef, columnCount);
 		return piece;
 	}
 }

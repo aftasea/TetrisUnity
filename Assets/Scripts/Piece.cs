@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Piece
 {
-	private int[][,] shapeRotations;
-	private int rotationIndex = 0;
+	private readonly int[][,] shapeRotations;
+	private int rotationIndex;
 
-	public Piece(IPieceDefinition definition)
+	public Piece(IPieceDefinition definition, int columnCount)
 	{
 		shapeRotations = definition.ShapeRotations;
-		topLeftPos = definition.SpawnPosition;
+
+		topLeftPos = new GridPosition(0,
+			Mathf.CeilToInt((columnCount - Shape.GetLength(1)) / 2f)
+		);
 	}
 
 	public int[,] Shape

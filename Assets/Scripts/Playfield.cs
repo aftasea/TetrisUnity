@@ -79,6 +79,7 @@ public class Playfield : MonoBehaviour
 		this.columns = cols;
 		Grid = new List<List<int>>();
 		InitGrid();
+		CurrentPiece = null;
 		OnGridSizeChanged?.Invoke();
 	}
 
@@ -102,7 +103,7 @@ public class Playfield : MonoBehaviour
 
 	private void SpawnShape()
 	{
-		CurrentPiece = pieceSelector.GetRandomPiece();
+		CurrentPiece = pieceSelector.GetRandomPiece(Columns);
 		if (IsGameLost())
 			GameOver();
 		else

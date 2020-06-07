@@ -12,7 +12,7 @@ public class GridSizeUI : MonoBehaviour
 	private Playfield playfield;
 
 	private const int minRows = 4;
-	private const int minColumns = 7;
+	private const int minColumns = 4;
 
 	private void Awake()
 	{
