@@ -25,6 +25,13 @@ public class Playfield : MonoBehaviour
 	[SerializeField]
 	private float initialFallTime = 1f;
 
+	[SerializeField]
+	private int linesPerSpeedUp = 10;
+	[SerializeField]
+	private float fallTimeAfterSpeedUp = 0.9f;
+	private int clearedLinesCount;
+	private float fallTime;
+
 	private PieceSelector pieceSelector;
 	private InputHandler input;
 
@@ -38,7 +45,7 @@ public class Playfield : MonoBehaviour
 	{
 		get;
 		private set;
-	}	
+	}
 
 	private void Awake()
 	{
@@ -87,6 +94,8 @@ public class Playfield : MonoBehaviour
 	{
 		ClearGrid();
 		AddInputEventListeners();
+		clearedLinesCount = 0;
+		fallTime = initialFallTime;
 		SpawnShape();
 	}
 
@@ -126,7 +135,7 @@ public class Playfield : MonoBehaviour
 
 	private IEnumerator Fall()
 	{
-		yield return new WaitForSeconds(initialFallTime);
+		yield return new WaitForSeconds(fallTime);
 		
 		if (CanFall())
 		{
@@ -270,8 +279,19 @@ public class Playfield : MonoBehaviour
 		foreach (int i in completedLineIndexes)
 		{
 			Grid.RemoveAt(i);
+			clearedLinesCount++;
+			CheckSpeedUp();
 		}
 		OnLinesCleared?.Invoke(completedLineIndexes.Count);
+	}
+
+	private void CheckSpeedUp()
+	{
+		if (clearedLinesCount % linesPerSpeedUp == 0)
+		{
+			fallTime *= fallTimeAfterSpeedUp;
+			Debug.Log("Speed Up! " + fallTime);
+		}
 	}
 
 	private void AddNewEmptyLines(int lineCount)

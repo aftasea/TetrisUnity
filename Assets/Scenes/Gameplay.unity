@@ -3035,6 +3035,8 @@ MonoBehaviour:
   columns: 10
   rows: 20
   initialFallTime: 0.2
+  linesPerSpeedUp: 4
+  fallTimeAfterSpeedUp: 0.9
 --- !u!4 &2023850658
 Transform:
   m_ObjectHideFlags: 0
