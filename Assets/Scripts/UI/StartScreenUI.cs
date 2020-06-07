@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class StartScreenUI : MonoBehaviour
 {
+	[SerializeField]
+	private GameObject overlay;
+
 	private Button startButton;
 
 	private void Awake()
@@ -19,13 +22,14 @@ public class StartScreenUI : MonoBehaviour
 
 	private void StartGame()
 	{
-		Game.StartGame();
+		overlay.SetActive(false);
 		startButton.gameObject.SetActive(false);
+		Game.StartGame();
 	}
 
 	private void ShowGameOverScreen()
 	{
-		Debug.Log("GameOver");
+		overlay.SetActive(true);
 		startButton.gameObject.SetActive(true);
 	}
 }
