@@ -45,13 +45,15 @@ public class ScoreManager : MonoBehaviour
 	private void AddEventListeners()
 	{
 		playfield.OnLinesCleared += AddPoints;
-		playfield.OnGameOver += UpdateHighScore;
+		Game.OnGameStart += ResetScore;
+		Game.OnGameOver += UpdateHighScore;
 	}
 
 	private void RemoveEventListeners()
 	{
 		playfield.OnLinesCleared -= AddPoints;
-		playfield.OnGameOver -= UpdateHighScore;
+		Game.OnGameStart -= ResetScore;
+		Game.OnGameOver -= UpdateHighScore;
 	}
 
 	private void AddPoints(int lineCount)
@@ -77,5 +79,10 @@ public class ScoreManager : MonoBehaviour
 	{
 		if (Score > BestScore)
 			Persistence.SetInt(scoreKey, Score);
+	}
+
+	private void ResetScore()
+	{
+		Score = 0;
 	}
 }

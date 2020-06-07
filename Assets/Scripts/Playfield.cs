@@ -5,7 +5,6 @@ using UnityEngine;
 public class Playfield : MonoBehaviour
 {
 	public event System.Action<int> OnLinesCleared;
-	public event System.Action OnGameOver;
 
 	[SerializeField]
 	private int columns = 10;
@@ -71,8 +70,20 @@ public class Playfield : MonoBehaviour
 
 	public void StartGame()
 	{
+		ClearGrid();
 		AddInputEventListeners();
 		SpawnShape();
+	}
+
+	private void ClearGrid()
+	{
+		foreach (var row in Grid)
+		{
+			for (int c = row.Count - 1; c >= 0; --c)
+			{
+				row[c] = 0;
+			}
+		}
 	}
 
 	private void SpawnShape()
@@ -95,7 +106,6 @@ public class Playfield : MonoBehaviour
 	private void GameOver()
 	{
 		RemoveInputEventListeners();
-		OnGameOver?.Invoke();
 		Game.GameOver();
 	}
 

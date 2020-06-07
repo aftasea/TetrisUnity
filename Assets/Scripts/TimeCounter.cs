@@ -10,9 +10,24 @@ public class TimeCounter : MonoBehaviour
 		private set;
 	}
 
+	private void Awake()
+	{
+		Game.OnGameStart += ResetTime;
+	}
+
+	private void OnDestroy()
+	{
+		Game.OnGameStart -= ResetTime;
+	}
+
 	private void Update()
 	{
 		if (Game.IsRunning)
 			ElapsedTime += Time.deltaTime;
+	}
+
+	private void ResetTime()
+	{
+		ElapsedTime = 0;
 	}
 }

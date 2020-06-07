@@ -9,11 +9,23 @@ public class StartScreenUI : MonoBehaviour
 	{
 		startButton = GetComponentInChildren<Button>();
 		startButton.onClick.AddListener(StartGame);
+		Game.OnGameOver += ShowGameOverScreen;
+	}
+
+	private void OnDestroy()
+	{
+		Game.OnGameOver -= ShowGameOverScreen;
 	}
 
 	private void StartGame()
 	{
 		Game.StartGame();
 		startButton.gameObject.SetActive(false);
+	}
+
+	private void ShowGameOverScreen()
+	{
+		Debug.Log("GameOver");
+		startButton.gameObject.SetActive(true);
 	}
 }

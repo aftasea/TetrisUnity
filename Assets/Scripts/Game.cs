@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
 	}
 
 	public static event System.Action OnGameStart;
+	public static event System.Action OnGameOver;
 
 	private static Game instance;
 	private State state = State.StartScreen;
@@ -25,7 +26,7 @@ public class Game : MonoBehaviour
 		else
 		{
 			Debug.LogWarning("There is already an instance of Game");
-			DestroyImmediate(this);
+			Destroy(this);
 		}
 	}
 
@@ -48,5 +49,6 @@ public class Game : MonoBehaviour
 	public static void GameOver()
 	{
 		instance.state = State.GameOver;
+		OnGameOver?.Invoke();
 	}
 }
