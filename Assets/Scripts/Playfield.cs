@@ -222,6 +222,8 @@ public class Playfield : MonoBehaviour
 			}
 		}
 
+		AudioManager.Play(SoundId.Land);
+
 		CheckCompletedLines();
 		SpawnShape();
 	}
