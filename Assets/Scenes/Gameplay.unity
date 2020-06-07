@@ -2841,7 +2841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a6d6edc215b4fb6ac6e6da5318cae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landSound: {fileID: 8300000, guid: f5ce65b905c8c4a0c99d21caeab08cfb, type: 3}
   soundDefinitions:
   - id: 0
     clip: {fileID: 8300000, guid: f5ce65b905c8c4a0c99d21caeab08cfb, type: 3}
@@ -2850,7 +2849,7 @@ MonoBehaviour:
   - id: 3
     clip: {fileID: 8300000, guid: 72cb5f4cea2ce4e039c2f94115917f65, type: 3}
   - id: 2
-    clip: {fileID: 8300000, guid: 72cb5f4cea2ce4e039c2f94115917f65, type: 3}
+    clip: {fileID: 8300000, guid: be37dcfcb0a1a4b4989cb27520ed7006, type: 3}
 --- !u!82 &1971609274
 AudioSource:
   m_ObjectHideFlags: 0

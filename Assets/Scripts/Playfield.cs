@@ -195,7 +195,10 @@ public class Playfield : MonoBehaviour
 			nextPos.col++;
 
 		if (!IsThereCollision(ref nextPos, CurrentPiece.Shape))
+		{
 			CurrentPiece.topLeftPos = nextPos;
+			AudioManager.Play(SoundId.Move);
+		}
 	}
 
 	private void RotatePiece(Rotation direction)
