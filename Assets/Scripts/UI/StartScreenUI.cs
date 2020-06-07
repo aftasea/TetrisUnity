@@ -5,6 +5,8 @@ public class StartScreenUI : MonoBehaviour
 {
 	[SerializeField]
 	private GameObject overlay;
+	[SerializeField]
+	private GameObject gameOverScreen;
 
 	private Button startButton;
 
@@ -13,6 +15,7 @@ public class StartScreenUI : MonoBehaviour
 		startButton = GetComponentInChildren<Button>();
 		startButton.onClick.AddListener(StartGame);
 		Game.OnGameOver += ShowGameOverScreen;
+		gameOverScreen.SetActive(false);
 	}
 
 	private void OnDestroy()
@@ -23,6 +26,7 @@ public class StartScreenUI : MonoBehaviour
 	private void StartGame()
 	{
 		overlay.SetActive(false);
+		gameOverScreen.SetActive(false);
 		startButton.gameObject.SetActive(false);
 		Game.StartGame();
 	}
@@ -30,6 +34,7 @@ public class StartScreenUI : MonoBehaviour
 	private void ShowGameOverScreen()
 	{
 		overlay.SetActive(true);
+		gameOverScreen.SetActive(true);
 		startButton.gameObject.SetActive(true);
 	}
 }
