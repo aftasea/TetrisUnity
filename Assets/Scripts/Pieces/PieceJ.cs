@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PieceJ : IPieceDefinition
 {
-	public Color PieceColor { get; } = Color.blue;
+	public ShapeType Id { get; } = ShapeType.J;
 
 	public int[][,] ShapeRotations { get; } = new int[][,] {
 		new int[,] {

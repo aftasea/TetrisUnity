@@ -2,18 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShapeType
-{
-	None = 0,
-	I,
-	J,
-	L,
-	O,
-	S,
-	T,
-	Z
-}
-
 public class PieceSelector : MonoBehaviour
 {
 	private IPieceDefinition[] pieces = {

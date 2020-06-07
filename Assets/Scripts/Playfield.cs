@@ -220,7 +220,7 @@ public class Playfield : MonoBehaviour
 				{
 					int gridRow = CurrentPiece.topLeftPos.row + r;
 					int gridColumn = CurrentPiece.topLeftPos.col + c;
-					Grid[gridRow][gridColumn] = shapeValue;
+					Grid[gridRow][gridColumn] = (int)CurrentPiece.Type;
 				}
 			}
 		}

@@ -17,6 +17,11 @@ public class Piece
 		);
 	}
 
+	public ShapeType Type
+	{
+		get { return definition.Id; }
+	}
+
 	public int[,] Shape
 	{
 		get { return definition.ShapeRotations[rotationIndex]; }

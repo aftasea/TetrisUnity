@@ -1,8 +1,18 @@
-﻿using UnityEngine;
+﻿public enum ShapeType
+{
+	None = 0,
+	I,
+	J,
+	L,
+	O,
+	S,
+	T,
+	Z
+}
 
 public interface IPieceDefinition
 {
-	Color PieceColor
+	ShapeType Id
 	{
 		get;
 	}
