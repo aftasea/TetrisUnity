@@ -235,7 +235,8 @@ public class Playfield : MonoBehaviour
 		if (completedLineIndexes.Count > 0)
 		{
 			ClearLines(completedLineIndexes);
-			AddNewEmptyLines(completedLineIndexes.Count);			
+			AddNewEmptyLines(completedLineIndexes.Count);
+			AudioManager.Play(SoundId.Line);
 		}
 	}
 

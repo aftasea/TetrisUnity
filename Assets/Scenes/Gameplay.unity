@@ -2842,9 +2842,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landSound: {fileID: 8300000, guid: f5ce65b905c8c4a0c99d21caeab08cfb, type: 3}
-  sounds:
+  soundDefinitions:
   - id: 0
     clip: {fileID: 8300000, guid: f5ce65b905c8c4a0c99d21caeab08cfb, type: 3}
+  - id: 1
+    clip: {fileID: 8300000, guid: 0ed20408ad9614acc956742f9faea910, type: 3}
 --- !u!82 &1971609274
 AudioSource:
   m_ObjectHideFlags: 0

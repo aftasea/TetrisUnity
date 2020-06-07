@@ -37,7 +37,6 @@ public class AudioManager : MonoBehaviour
 			instance = this;
 			audioSource = GetComponent<AudioSource>();
 			PrepareSounds();
-			Play(SoundId.Land);
 		}
 		else
 		{
